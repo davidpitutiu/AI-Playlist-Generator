@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # Spotify API credentials
-cid = 'b98f4b0dc951447c9cb3c2a7fe81c079'
-secret = '5d505d2604fc455f880e11dbe86be26e'
+cid = '7a858c9cf4754f6cbc601cc7fab10ac6'
+secret = '54c4ff3c2ab8480ca30d8e68d631af88'
 redirect_uri = 'http://localhost:8888/callback'
 scope = 'user-library-read'
 
@@ -150,6 +150,7 @@ def get_track_info(track_item, access_token):
         'Popularity': popularity,
         'Duration': duration_formatted,
     }
+
 
 if __name__ == '__main__':
     app.run(port=8888, debug=True)
