@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Spotify</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Welcome to Spotify</h1>
+        <p>You have <strong>{{ num_tracks }}</strong> liked songs.</p>
+        <button id="startBtn" class="btn btn-success" onclick="startAction()">Start</button>
+        <div id="output" class="mt-3"></div>
+    </div>
+
+    <script>
+        function startAction() {
+            document.getElementById('output').innerHTML = 'Starting to save songs...';
+            fetch('/start')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.num_tracks) {
+                        document.getElementById('output').innerHTML = `Successfully saved ${data.num_tracks} songs to JSON file.`;
+                    } else if (data.error) {
+                        document.getElementById('output').innerHTML = `Error: ${data.error}`;
+                    } else {
+                        document.getElementById('output').innerHTML = 'No data received.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('output').innerHTML = 'An error occurred: ' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
